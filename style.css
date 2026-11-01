@@ -1,0 +1,1499 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+body {
+    background: #000;
+    color: white;
+    font-family: monospace;
+}
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+#menu {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+}
+
+
+.menu-background {
+
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        url("museu.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    filter:
+        brightness(0.30)
+        saturate(0.65)
+        sepia(0.25);
+
+    transform: scale(1.05);
+
+}
+
+
+.menu-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle,
+            transparent 10%,
+            rgba(0,0,0,0.55) 100%
+        );
+
+}
+
+
+.menu-content {
+
+    position: relative;
+
+    z-index: 10;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+}
+
+
+.small-title {
+
+    color: #c5b27d;
+
+    font-size: 16px;
+
+    letter-spacing: 6px;
+
+    margin-bottom: 20px;
+
+}
+
+
+h1 {
+
+    color: #eee4c9;
+
+    font-size: clamp(
+        45px,
+        7vw,
+        90px
+    );
+
+    line-height: 0.9;
+
+    letter-spacing: 5px;
+
+    text-shadow:
+        5px 5px 0 #000;
+
+}
+
+
+h1 span {
+
+    display: block;
+
+    margin-top: 15px;
+
+    font-size: 0.55em;
+
+    color: #b99a56;
+
+    letter-spacing: 10px;
+
+}
+
+
+.line {
+
+    width: 300px;
+
+    height: 3px;
+
+    background: #aa8b4d;
+
+    margin-top: 30px;
+
+}
+
+
+.years {
+
+    margin-top: 12px;
+
+    color: #c8bc9c;
+
+    font-size: 18px;
+
+    letter-spacing: 7px;
+
+}
+
+
+.menu-buttons {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    width: 300px;
+
+    margin-top: 45px;
+
+}
+
+#freeModeButton:disabled {
+    cursor: not-allowed;
+    color: #817b6b;
+    background: #171914;
+    border-color: #4c4638;
+    box-shadow: 3px 3px 0 #050505;
+}
+
+#freeModeButton:disabled:hover {
+    color: #817b6b;
+    background: #171914;
+    transform: none;
+}
+
+.free-mode-status {
+    margin-top: -5px;
+    color: #81765b;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+
+button {
+
+    font-family: monospace;
+
+    font-weight: bold;
+
+    font-size: 18px;
+
+    letter-spacing: 3px;
+
+    color: #e8dfc6;
+
+    background: #242721;
+
+    border: 2px solid #8b7545;
+
+    padding: 15px;
+
+    cursor: pointer;
+
+    box-shadow:
+        5px 5px 0 #050505;
+
+    transition:
+        0.15s;
+
+}
+
+
+button:hover {
+
+    background: #a58a4d;
+
+    color: #111;
+
+    transform:
+        translate(-3px, -3px);
+
+}
+
+
+button:active {
+
+    transform:
+        translate(2px, 2px);
+
+}
+
+
+.version {
+
+    position: absolute;
+
+    bottom: 20px;
+
+    color: #777;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =====================================================
+   ARQUIVOS DE SALVAMENTO
+===================================================== */
+
+#saveSelect {
+    position: fixed;
+    inset: 0;
+    z-index: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background:
+        radial-gradient(circle, rgba(36, 39, 30, 0.86), rgba(0, 0, 0, 0.96)),
+        url("museu.png") center / cover;
+}
+
+#saveBox {
+    width: min(720px, 94vw);
+    padding: clamp(24px, 4vw, 40px);
+    text-align: center;
+    background: rgba(20, 23, 18, 0.96);
+    border: 3px solid #806b3f;
+    box-shadow: 10px 10px 0 #050505;
+}
+
+#saveBox h2 {
+    color: #e9dfc5;
+    font-size: clamp(24px, 5vw, 36px);
+    letter-spacing: 4px;
+}
+
+#saveBox > p {
+    margin: 13px 0 25px;
+    color: #bdb39a;
+    font-size: 12px;
+}
+
+.save-slots {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.save-slot {
+    min-height: 126px;
+    padding: 17px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    text-align: left;
+    letter-spacing: 1px;
+}
+
+.save-slot-card {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.delete-save-button {
+    padding: 8px 10px;
+    color: #d69b8b;
+    background: #231714;
+    border-color: #704337;
+    box-shadow: 3px 3px 0 #050505;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.delete-save-button:hover {
+    color: #fff;
+    background: #7c3027;
+}
+
+.save-slot-number {
+    color: #c5a65f;
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+.save-slot strong {
+    color: #eee4c9;
+    font-size: 15px;
+}
+
+.save-slot small {
+    color: #a9a18d;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+#saveBackButton {
+    width: 100%;
+}
+
+
+/* =====================================================
+   JOGO
+===================================================== */
+
+#game {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: #000;
+
+    overflow: hidden;
+
+}
+
+#pauseButton {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 220;
+    min-width: 112px;
+    padding: 9px 12px;
+    color: #ead8a7;
+    background: rgba(15, 17, 15, 0.9);
+    border: 1px solid rgba(192, 155, 81, 0.8);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.65);
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+#pauseButton:hover {
+    color: #111;
+    background: #c09b51;
+}
+
+
+.hidden {
+
+    display: none !important;
+
+}
+
+
+/* =====================================================
+   TELA PRETA
+===================================================== */
+
+#blackScreen {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 100;
+
+    background: #000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    transition:
+        opacity 1.5s ease;
+
+}
+
+
+#blackScreen.fade {
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+
+
+#loadingText {
+
+    color: #777;
+
+    font-size: 14px;
+
+    letter-spacing: 5px;
+
+    animation:
+        blink 1s infinite;
+
+}
+
+
+@keyframes blink {
+
+    0% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.3;
+    }
+
+}
+
+
+/* =====================================================
+   MUNDO
+===================================================== */
+
+#world {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background: #000;
+
+}
+
+
+/*
+   O museu ocupa exatamente a tela.
+
+   Usamos 100% / 100% em vez de "cover".
+   Isso é importante para que as coordenadas das
+   barreiras permaneçam alinhadas com a imagem.
+*/
+
+#museum {
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: fill;
+
+    image-rendering: pixelated;
+
+    user-select: none;
+
+    pointer-events: none;
+
+}
+
+
+/* =====================================================
+   PERSONAGEM
+===================================================== */
+
+#player {
+
+    position: absolute;
+
+    width: 52px;
+
+    height: 76px;
+
+    transform:
+        translate(-50%, -100%);
+
+    z-index: 20;
+
+    pointer-events: none;
+
+    image-rendering: pixelated;
+
+}
+
+
+#player img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+    display: block;
+}
+
+#activePlayerSprite {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+#player.idle-breathing #activePlayerSprite {
+    transform-origin: 50% 88%;
+    animation: blonde-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes blonde-breathe {
+    0%, 100% { transform: translateY(0) scaleY(1); }
+    50% { transform: translateY(-1px) scaleY(1.025); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #player.idle-breathing #activePlayerSprite { animation: none; }
+}
+
+
+/* =====================================================
+   INDICAÇÃO DOS CAPÍTULOS
+===================================================== */
+
+#chapterHint {
+    position: absolute;
+    left: 50%;
+    bottom: 62px;
+    transform: translateX(-50%);
+    z-index: 50;
+    width: min(620px, 82vw);
+    padding: 12px 18px 11px;
+    text-align: center;
+    pointer-events: none;
+    background: rgba(10, 10, 8, 0.88);
+    border: 2px solid rgba(171, 142, 79, 0.82);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.65);
+    color: #e8dfc6;
+    opacity: 1;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+#chapterHint.hidden {
+    display: none;
+}
+
+#chapterHintNumber {
+    color: #c09b51;
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin-bottom: 4px;
+}
+
+#chapterHintTitle {
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 #000;
+}
+
+#chapterHintText {
+    margin-top: 5px;
+    color: #bdb39a;
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+.chapterHintPrompt {
+    margin-top: 7px;
+    color: #756f61;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+
+/* =====================================================
+   CAPÍTULO 1 — EXPLORAÇÃO DE CENÁRIOS
+===================================================== */
+
+.chapter-panel,
+#scenarioPanel,
+#sceneTransition {
+    position: absolute;
+    inset: 0;
+}
+
+.chapter-panel {
+    z-index: 120;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.62);
+}
+
+.chapter-dialog,
+#scenarioStory {
+    width: min(760px, 92vw);
+    max-height: min(720px, 88vh);
+    overflow-y: auto;
+    padding: clamp(22px, 4vw, 38px);
+    background: linear-gradient(145deg, rgba(33, 36, 28, 0.98), rgba(13, 15, 12, 0.98));
+    border: 3px solid #9f8247;
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.72);
+    color: #e8dfc6;
+    text-align: center;
+}
+
+.dialog-kicker {
+    color: #c8a65e;
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin-bottom: 13px;
+}
+
+.chapter-dialog h2,
+#scenarioStory h2 {
+    color: #f0e2bc;
+    font-size: clamp(24px, 4vw, 36px);
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.chapter-dialog p,
+#scenarioStory p {
+    color: #d0c7b1;
+    font-family: Arial, sans-serif;
+    font-size: clamp(14px, 1.9vw, 16px);
+    line-height: 1.65;
+    text-align: left;
+}
+
+.explore-question {
+    margin: 28px 0 16px;
+    color: #d7bd7a;
+    font-size: 17px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.dialog-actions button,
+.location-button,
+.secondary-button {
+    font-size: 13px;
+    padding: 12px 16px;
+}
+
+.secondary-button {
+    background: #171914;
+    color: #c8bfa8;
+}
+
+.dialog-subtitle {
+    text-align: center !important;
+}
+
+.location-dialog {
+    width: min(700px, 92vw);
+}
+
+.location-options {
+    display: grid;
+    gap: 10px;
+    margin: 23px 0 16px;
+}
+
+.puzzle-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 24px 0 14px;
+}
+
+.puzzle-options button {
+    padding: 15px;
+}
+
+.puzzle-options button:disabled {
+    cursor: default;
+    opacity: 0.55;
+    transform: none;
+}
+
+.puzzle-feedback {
+    min-height: 22px;
+    text-align: center !important;
+    font-family: monospace !important;
+    font-weight: bold;
+}
+
+.puzzle-feedback.incorrect {
+    color: #df8d78;
+}
+
+.puzzle-feedback.correct {
+    color: #a9d886;
+}
+
+#finalReviewPanel .chapter-dialog {
+    width: min(900px, 94vw);
+}
+
+.final-timeline-board {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    margin: 20px 0 14px;
+}
+
+.final-timeline-piece {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    align-items: center;
+    gap: 10px;
+    min-height: 54px;
+    padding: 9px 12px;
+    color: #e8dfc6;
+    text-align: left;
+    background: linear-gradient(120deg, rgba(63, 55, 39, 0.95), rgba(22, 24, 22, 0.98));
+    border: 1px solid rgba(192, 155, 81, 0.58);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+}
+
+.final-timeline-piece:hover,
+.final-timeline-piece.selected {
+    border-color: #f2d387;
+    background: linear-gradient(120deg, rgba(108, 83, 43, 0.98), rgba(36, 32, 24, 0.98));
+}
+
+.final-timeline-piece.selected {
+    box-shadow: 0 0 0 2px rgba(242, 211, 135, 0.28);
+}
+
+.final-timeline-piece.misplaced {
+    border-color: #d77b68;
+}
+
+.final-timeline-piece:disabled {
+    cursor: default;
+    opacity: 0.8;
+}
+
+.timeline-position {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    color: #f2d387;
+    font-weight: 700;
+    border: 1px solid rgba(242, 211, 135, 0.55);
+    border-radius: 50%;
+}
+
+.timeline-event-text {
+    font: 14px/1.35 Arial, sans-serif;
+}
+
+.final-puzzle-actions {
+    margin-top: 12px;
+}
+
+#finalDoorMarker {
+    position: absolute;
+    left: 4.5%;
+    top: 48%;
+    z-index: 2;
+    padding: 8px 10px;
+    color: #fff0b3;
+    background: rgba(65, 42, 18, 0.86);
+    border: 1px solid #e5c86f;
+    font: bold 10px monospace;
+    letter-spacing: 1px;
+    pointer-events: none;
+    animation: final-door-pulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes final-door-pulse {
+    to { box-shadow: 0 0 18px #e5c86f; }
+}
+
+.puzzle-inventory {
+    margin: 20px 0 11px;
+    color: #cdb173;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.adventure-clues {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.adventure-clue {
+    min-height: 78px;
+    padding: 13px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: #e8dfc6;
+    background: #20231d;
+    border-color: #74623c;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.adventure-clue img {
+    width: 66px;
+    height: 46px;
+    flex: 0 0 auto;
+    object-fit: cover;
+    border: 1px solid rgba(223, 203, 149, 0.55);
+    image-rendering: pixelated;
+}
+
+.adventure-clue span {
+    text-align: left;
+}
+
+.adventure-clue.collected,
+.adventure-clue:disabled {
+    color: #9fcb7a;
+    background: #1b291a;
+    border-color: #66915d;
+    cursor: default;
+    transform: none;
+}
+
+.location-button {
+    width: 100%;
+    text-align: left;
+    color: #ead8a7;
+    background: #20231d;
+}
+
+#sceneTransition {
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    color: #9d987f;
+    font-size: 13px;
+    letter-spacing: 5px;
+    animation: scene-pulse 0.85s ease-in-out infinite alternate;
+}
+
+@keyframes scene-pulse {
+    from { opacity: 0.45; }
+    to { opacity: 1; }
+}
+
+#scenarioPanel {
+    z-index: 250;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 30px 20px;
+    background: #000;
+}
+
+#scenarioImage,
+.scenario-shade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#scenarioImage {
+    object-fit: cover;
+    image-rendering: pixelated;
+}
+
+.scenario-shade {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 20%, rgba(0, 0, 0, 0.82) 100%);
+}
+
+#scenarioStory {
+    position: relative;
+    z-index: 1;
+    max-height: 62vh;
+    background: rgba(13, 15, 12, 0.92);
+    text-align: left;
+}
+
+#scenarioStory h2 {
+    text-align: left;
+}
+
+#endingScreen {
+    position: absolute;
+    inset: 0;
+    z-index: 500;
+    overflow: hidden;
+    background: #000;
+    color: #e8dfc6;
+}
+
+.ending-controls {
+    position: absolute;
+    top: 50%;
+    left: clamp(12px, 2vw, 28px);
+    z-index: 3;
+    width: 132px;
+    transform: translateY(-50%);
+}
+
+#endingSpeedButton,
+.ending-speed-options button {
+    width: 100%;
+    padding: 11px 8px;
+    border: 1px solid rgba(200, 166, 94, 0.72);
+    background: rgba(15, 16, 13, 0.92);
+    color: #ead8a7;
+    font: bold 10px monospace;
+    letter-spacing: 1px;
+}
+
+.ending-speed-options:not(.hidden) {
+    display: grid;
+    gap: 5px;
+    margin-top: 7px;
+}
+
+.ending-speed-options button {
+    font-size: 12px;
+}
+
+.ending-roll {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(820px, 86vw);
+    padding: 32px 0 45vh;
+    text-align: center;
+    opacity: 0;
+}
+
+.ending-roll.rolling {
+    animation: ending-roll 240s linear forwards;
+}
+
+.ending-roll h1 {
+    margin-bottom: 12px;
+    color: #ead8a7;
+    font-size: clamp(25px, 5vw, 46px);
+    letter-spacing: 5px;
+}
+
+.ending-roll .ending-subtitle {
+    margin: 0 0 54px;
+    color: #b99b5a;
+    font-size: 13px;
+    letter-spacing: 5px;
+    text-align: center;
+}
+
+.ending-roll p {
+    margin: 0 0 34px;
+    color: #d2c9b5;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(17px, 2.2vw, 22px);
+    line-height: 1.8;
+    text-align: center;
+}
+
+.ending-roll .ending-last-line {
+    margin-top: 54px;
+    color: #ead8a7;
+    font-style: italic;
+}
+
+.ending-credits {
+    margin-top: 60px;
+    padding-top: 34px;
+    border-top: 1px solid rgba(200, 166, 94, 0.55);
+}
+
+.ending-credits h2 {
+    margin-bottom: 30px;
+    color: #ead8a7;
+    font-size: 30px;
+    letter-spacing: 8px;
+}
+
+.ending-credits p.credits-label {
+    margin: 28px 0 10px;
+    color: #b99b5a;
+    font: bold 11px monospace;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.ending-credits .credits-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ending-credits .credits-list li,
+.ending-credits p.credits-guest,
+.ending-credits p.credits-detail {
+    margin: 8px 0;
+    color: #d2c9b5;
+    font: 19px/1.6 Georgia, "Times New Roman", serif;
+    text-align: center;
+}
+
+.ending-credits p.credits-detail {
+    margin: 5px 0;
+    font-size: 17px;
+}
+
+@keyframes ending-roll {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, 100vh);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -100%);
+    }
+}
+
+.ending-finish {
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 18px;
+    background: #000;
+    text-align: center;
+}
+
+.ending-finish:not(.hidden) {
+    display: flex;
+}
+
+.ending-finish h2 {
+    color: #ead8a7;
+    font-size: clamp(44px, 10vw, 82px);
+    letter-spacing: 10px;
+}
+
+.ending-finish p {
+    margin-bottom: 20px;
+    color: #a99a77;
+    font: italic 18px Georgia, "Times New Roman", serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ending-roll.rolling {
+        animation-duration: 180s;
+    }
+}
+
+.scenario-actions {
+    justify-content: flex-end;
+}
+
+
+/* =====================================================
+   CONTROLES
+===================================================== */
+
+#controls {
+
+    position: absolute;
+
+    bottom: 15px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 40;
+
+    padding: 8px 14px;
+
+    background:
+        rgba(0,0,0,0.70);
+
+    border:
+        1px solid
+        rgba(180,150,90,0.5);
+
+    color: #aaa;
+
+    font-size: 11px;
+
+    pointer-events: none;
+
+}
+
+
+#controls b {
+
+    color: #e3ce99;
+
+}
+
+#controls kbd {
+    color: #e3ce99;
+    font: inherit;
+    font-weight: 700;
+    padding: 1px 4px;
+    border: 1px solid rgba(227, 206, 153, 0.55);
+    border-radius: 3px;
+}
+
+#notebookButton {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 30;
+    font-size: 10px;
+    padding: 10px 12px;
+}
+
+.mission-objectives,
+.notebook-entries {
+    display: grid;
+    gap: 10px;
+    margin: 18px 0;
+}
+
+.mission-objectives button {
+    text-align: left;
+}
+
+.mission-question {
+    margin: 20px 0 12px;
+    color: #f0e1bc;
+    font-size: 16px;
+}
+
+.chapter-dialog .mission-progress {
+    margin: 12px 0 0;
+    color: #c8a65e;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.mission-text-answer {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.mission-text-answer input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    background: #10120f;
+    border: 1px solid #806b3f;
+    color: #f0e1bc;
+    font-family: inherit;
+}
+
+.notebook-dialog {
+    max-height: 78vh;
+    overflow-y: auto;
+}
+
+.notebook-entry {
+    padding: 12px;
+    border-left: 3px solid #806b3f;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.notebook-entry h3 {
+    margin: 0 0 4px;
+    color: #e3ce99;
+    font-size: 12px;
+}
+
+.notebook-entry strong,
+.notebook-entry li {
+    color: #d7ceb6;
+    font-size: 13px;
+}
+
+.notebook-entry ul {
+    margin: 8px 0 0;
+    padding-left: 18px;
+}
+
+
+/* =====================================================
+   OPÇÕES
+===================================================== */
+
+#options {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 500;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+        rgba(0,0,0,0.75);
+
+}
+
+
+#optionsBox {
+
+    width: min(
+        430px,
+        90vw
+    );
+
+    padding: 30px;
+
+    background: #191c18;
+
+    border:
+        3px solid
+        #806b3f;
+
+    box-shadow:
+        10px 10px 0 #050505;
+
+}
+
+
+#optionsBox h2 {
+
+    text-align: center;
+
+    color: #e9dfc5;
+
+    font-size: 28px;
+
+    letter-spacing: 5px;
+
+}
+
+
+.separator {
+
+    height: 2px;
+
+    background: #806b3f;
+
+    margin:
+        20px 0 25px;
+
+}
+
+
+.option {
+
+    display: grid;
+
+    grid-template-columns:
+        90px 1fr 70px;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+    color: #c9bd9b;
+
+    font-size: 12px;
+
+}
+
+
+.option span:last-child {
+
+    text-align: right;
+
+}
+
+
+#volume {
+
+    width: 100%;
+
+    cursor: pointer;
+
+}
+
+#languageSelect {
+    width: 100%;
+    padding: 9px 10px;
+    color: #ead8a7;
+    background: #171914;
+    border: 1px solid #74623c;
+    font: inherit;
+    cursor: pointer;
+}
+
+
+#optionsBox button {
+
+    display: block;
+
+    width: 100%;
+
+    margin-top: 25px;
+
+}
+
+
+/* =====================================================
+   TELAS PEQUENAS
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .small-title {
+
+        font-size: 11px;
+
+        letter-spacing: 3px;
+
+    }
+
+
+    h1 {
+
+        font-size: 42px;
+
+    }
+
+
+    h1 span {
+
+        letter-spacing: 5px;
+
+    }
+
+
+    .menu-buttons {
+
+        width: 260px;
+
+    }
+
+    .save-slots {
+        grid-template-columns: 1fr;
+    }
+
+    .save-slot {
+        min-height: 94px;
+    }
+
+
+    #controls {
+
+        font-size: 9px;
+
+    }
+
+    .chapter-panel {
+        align-items: flex-end;
+        padding: 15px;
+    }
+
+    .chapter-dialog,
+    #scenarioStory {
+        width: 100%;
+        max-height: 78vh;
+        padding: 20px;
+    }
+
+    #scenarioPanel {
+        padding: 15px;
+    }
+
+    .dialog-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .puzzle-options {
+        grid-template-columns: 1fr;
+    }
+
+    .final-timeline-board {
+        grid-template-columns: 1fr;
+        gap: 7px;
+        margin: 14px 0 10px;
+    }
+
+    .final-timeline-piece {
+        min-height: 48px;
+        padding: 7px 9px;
+    }
+
+    .timeline-event-text {
+        font-size: 13px;
+    }
+
+    .adventure-clues {
+        grid-template-columns: 1fr;
+    }
+
+    .dialog-actions button {
+        width: 100%;
+    }
+
+}

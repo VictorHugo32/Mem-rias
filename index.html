@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Memórias do Século XX</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         MENU
+    ========================== -->
+
+    <section id="menu">
+
+        <div class="menu-background"></div>
+
+        <div class="menu-overlay"></div>
+
+        <div class="menu-content">
+
+            <div class="small-title">
+                UMA JORNADA PELA HISTÓRIA
+            </div>
+
+            <h1>
+                MEMÓRIAS
+                <span>DO SÉCULO XX</span>
+            </h1>
+
+            <div class="line"></div>
+
+            <div class="years">
+                1914 — 1991
+            </div>
+
+            <div class="menu-buttons">
+
+                <button id="playButton">
+                    JOGAR
+                </button>
+
+                <button id="freeModeButton" disabled>
+                    MODO LIVRE
+                </button>
+
+                <div id="freeModeStatus" class="free-mode-status">
+                    CONCLUA A JORNADA PARA LIBERAR
+                </div>
+
+                <button id="optionsButton">
+                    OPÇÕES
+                </button>
+
+                <button id="exitButton">
+                    SAIR
+                </button>
+
+            </div>
+
+            <div class="version">
+                VERSÃO 0.1
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ARQUIVOS DE SALVAMENTO
+    ========================== -->
+
+    <section id="saveSelect" class="hidden" aria-live="polite">
+        <div id="saveBox">
+            <div class="small-title">MEMÓRIAS DO SÉCULO XX</div>
+            <h2>ESCOLHA UM ARQUIVO</h2>
+            <p>O progresso é salvo somente no arquivo escolhido.</p>
+
+            <div id="saveSlots" class="save-slots"></div>
+
+            <button id="saveBackButton" class="secondary-button" type="button">VOLTAR</button>
+        </div>
+    </section>
+
+
+    <!-- =========================
+         JOGO
+    ========================== -->
+
+    <section id="game" class="hidden">
+
+        <button id="pauseButton" class="hidden" type="button" aria-label="PAUSAR JOGO">Ⅱ <span id="pauseButtonLabel">PAUSA</span></button>
+
+        <!-- Tela preta de entrada -->
+
+        <div id="blackScreen">
+
+            <div id="loadingText">
+                CARREGANDO...
+            </div>
+
+        </div>
+
+
+        <!-- Mundo -->
+
+        <div id="world">
+
+            <img
+                id="museum"
+                src="museu.png"
+                draggable="false"
+            >
+
+
+            <!-- Personagem -->
+
+            <div id="player" class="facing-right">
+                <img id="activePlayerSprite" src="sprites/blonde/frame-right-0.png" alt="" draggable="false" aria-hidden="true">
+            </div>
+
+
+            <!-- Indicação do capítulo ao se aproximar de uma porta -->
+
+            <div id="chapterHint" class="hidden">
+                <div id="chapterHintNumber"></div>
+                <div id="chapterHintTitle"></div>
+                <div id="chapterHintText"></div>
+                <div id="chapterHintPrompt" class="chapterHintPrompt">APROXIME-SE DA PORTA</div>
+            </div>
+
+            <div id="finalDoorMarker" class="hidden" aria-hidden="true">PORTA FINAL</div>
+
+
+            <!-- Indicador -->
+
+            <div id="controls">
+
+                <b>WASD</b> / <b>SETAS</b>
+                &nbsp; · &nbsp; <span>MOVER</span>
+
+            </div>
+
+            <button id="notebookButton" type="button">CADERNO HISTÓRICO</button>
+
+        </div>
+
+
+        <!-- Capítulo 1: introdução e exploração dos cenários -->
+        <section id="chapterOnePanel" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog">
+                <div class="dialog-kicker">CAPÍTULO 1 · 1914–1918</div>
+                <h2>A Primeira Guerra Mundial</h2>
+                <p>
+                    Entre 1914 e 1918, uma guerra de escala inédita envolveu
+                    alianças europeias e atingiu diversos continentes. No fronte
+                    ocidental, milhões de pessoas viveram a rotina das trincheiras.
+                </p>
+                <div class="explore-question">Você deseja saber mais sobre?</div>
+                <div class="dialog-actions">
+                    <button id="exploreYes" type="button">SIM</button>
+                    <button id="startChapterOnePuzzle" type="button">PERGUNTA DO CAPÍTULO</button>
+                    <button id="exploreNo" type="button">NÃO, VOLTAR AO MUSEU</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="locationPanel" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog location-dialog">
+                <div class="dialog-kicker">CAPÍTULO 1 · EXPLORAÇÃO</div>
+                <h2>Para onde você deseja ir?</h2>
+                <p class="dialog-subtitle">Escolha um cenário para conhecer uma parte da história do conflito.</p>
+                <div id="locationOptions" class="location-options">
+                    <button class="location-button" type="button" data-location="trincheiras">Trincheiras</button>
+                    <button class="location-button" type="button" data-location="terra-ninguem">Terra de Ninguém</button>
+                    <button class="location-button" type="button" data-location="vila-destruida">Vila Destruída</button>
+                    <button class="location-button" type="button" data-location="acampamento-militar">Acampamento Militar</button>
+                    <button class="location-button" type="button" data-location="posto-comando">Posto de Comando</button>
+                </div>
+                <button id="locationBack" class="secondary-button" type="button">VOLTAR</button>
+            </div>
+        </section>
+
+        <!-- Puzzle que desbloqueia o Capítulo 2 -->
+        <section id="chapterOnePuzzle" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog puzzle-dialog">
+                <div class="dialog-kicker">DESAFIO · CAPÍTULO 1</div>
+                <h2>Teste seus conhecimentos</h2>
+                <p class="dialog-subtitle">Em que ano começou a Primeira Guerra Mundial?</p>
+                <div id="puzzleOptions" class="puzzle-options">
+                    <button type="button" data-answer="1912">1912</button>
+                    <button type="button" data-answer="1914">1914</button>
+                    <button type="button" data-answer="1916">1916</button>
+                    <button type="button" data-answer="1918">1918</button>
+                </div>
+                <p id="puzzleFeedback" class="puzzle-feedback" aria-live="polite"></p>
+                <div class="dialog-actions">
+                    <button id="puzzleContinue" class="hidden" type="button">CONTINUAR</button>
+                    <button id="puzzleBack" class="secondary-button" type="button">VOLTAR</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Capítulo 2: Revolução Russa -->
+        <section id="chapterTwoPanel" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog">
+                <div class="dialog-kicker">CAPÍTULO 2 · 1917</div>
+                <h2>A Revolução Russa</h2>
+                <p>
+                    Em 1917, a crise provocada pela guerra, pela fome e pela
+                    desigualdade derrubou o czarismo e levou os bolcheviques ao poder.
+                    Explore lugares ligados aos acontecimentos que mudaram a Rússia.
+                </p>
+                <div class="explore-question">Você deseja saber mais sobre?</div>
+                <div class="dialog-actions">
+                    <button id="exploreTwoYes" type="button">SIM</button>
+                    <button id="startChapterTwoPuzzle" type="button">PERGUNTA DO CAPÍTULO</button>
+                    <button id="exploreTwoNo" type="button">NÃO, VOLTAR AO MUSEU</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="locationPanelTwo" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog location-dialog">
+                <div class="dialog-kicker">CAPÍTULO 2 · EXPLORAÇÃO</div>
+                <h2>Para onde você deseja ir?</h2>
+                <p class="dialog-subtitle">Escolha um cenário para conhecer uma parte da Revolução Russa.</p>
+                <div id="locationOptionsTwo" class="location-options">
+                    <button class="location-button" type="button" data-location-two="petrogrado">Petrogrado</button>
+                    <button class="location-button" type="button" data-location-two="fabrica">Fábrica</button>
+                    <button class="location-button" type="button" data-location-two="estacao-ferroviaria">Estação Ferroviária</button>
+                    <button class="location-button" type="button" data-location-two="praca-manifestacao">Praça de Manifestação</button>
+                    <button class="location-button" type="button" data-location-two="palacio-inverno">Palácio de Inverno</button>
+                </div>
+                <button id="locationBackTwo" class="secondary-button" type="button">VOLTAR</button>
+            </div>
+        </section>
+
+        <!-- Estrutura reutilizada pelos Capítulos 3 e 4 -->
+        <section id="extraChapterPanel" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog">
+                <div id="extraChapterKicker" class="dialog-kicker"></div>
+                <h2 id="extraChapterTitle"></h2>
+                <p id="extraChapterIntro"></p>
+                <div class="explore-question">Você deseja saber mais sobre?</div>
+                <div class="dialog-actions">
+                    <button id="extraExplore" type="button">SIM</button>
+                    <button id="extraPuzzle" type="button">PERGUNTA DO CAPÍTULO</button>
+                    <button id="extraClose" type="button">NÃO, VOLTAR AO MUSEU</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="extraLocationPanel" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog location-dialog">
+                <div id="extraLocationKicker" class="dialog-kicker"></div>
+                <h2>Para onde você deseja ir?</h2>
+                <p id="extraLocationSubtitle" class="dialog-subtitle"></p>
+                <div id="extraLocationOptions" class="location-options"></div>
+                <button id="extraLocationBack" class="secondary-button" type="button">VOLTAR</button>
+            </div>
+        </section>
+
+        <!-- Puzzle de investigação usado nos Capítulos 2, 3 e 4 -->
+        <section id="mysteryPuzzlePanel" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog mystery-dialog">
+                <div id="mysteryKicker" class="dialog-kicker"></div>
+                <h2 id="mysteryTitle"></h2>
+                <p id="mysteryIntro" class="dialog-subtitle"></p>
+                <div id="mysteryClues" class="mystery-clues"></div>
+                <p id="mysteryFeedback" class="puzzle-feedback" aria-live="polite"></p>
+                <div class="dialog-actions">
+                    <button id="mysteryContinue" class="hidden" type="button">CONTINUAR</button>
+                    <button id="mysteryBack" class="secondary-button" type="button">VOLTAR</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Capítulo 3: Crise de 1929 -->
+        <section id="chapterThreePanel" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog">
+                <div class="dialog-kicker">CAPÍTULO 3 · 1929</div>
+                <h2>A Crise de 1929</h2>
+                <p>A quebra da Bolsa de Nova York espalhou falências, desemprego e pobreza pelos Estados Unidos e pelo mundo. Explore os efeitos dessa crise.</p>
+                <div class="explore-question">Você deseja saber mais sobre?</div>
+                <div class="dialog-actions">
+                    <button id="exploreThreeYes" type="button">SIM</button>
+                    <button id="startChapterThreePuzzle" type="button">PERGUNTA DO CAPÍTULO</button>
+                    <button id="exploreThreeNo" type="button">NÃO, VOLTAR AO MUSEU</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="locationPanelThree" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog location-dialog">
+                <div class="dialog-kicker">CAPÍTULO 3 · EXPLORAÇÃO</div>
+                <h2>Para onde você deseja ir?</h2>
+                <p class="dialog-subtitle">Escolha um cenário para acompanhar a dimensão humana da crise.</p>
+                <div id="locationOptionsThree" class="location-options">
+                    <button class="location-button" type="button" data-location-three="wall-street">Wall Street</button>
+                    <button class="location-button" type="button" data-location-three="banco-crise">Banco em Crise</button>
+                    <button class="location-button" type="button" data-location-three="fabrica-fechada">Fábrica Fechada</button>
+                    <button class="location-button" type="button" data-location-three="fila-pao">Fila do Pão</button>
+                    <button class="location-button" type="button" data-location-three="hooverville">Hooverville</button>
+                </div>
+                <button id="locationBackThree" class="secondary-button" type="button">VOLTAR</button>
+            </div>
+        </section>
+
+        <!-- Capítulo 4: Ascensão do Nazismo -->
+        <section id="chapterFourPanel" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog">
+                <div class="dialog-kicker">CAPÍTULO 4 · 1933</div>
+                <h2>A Ascensão do Nazismo</h2>
+                <p>Em meio à crise e à instabilidade política, Adolf Hitler chegou ao poder em 1933 e a Alemanha foi transformada em uma ditadura nazista.</p>
+                <div class="explore-question">Você deseja saber mais sobre?</div>
+                <div class="dialog-actions">
+                    <button id="exploreFourYes" type="button">SIM</button>
+                    <button id="startChapterFourPuzzle" type="button">PERGUNTA DO CAPÍTULO</button>
+                    <button id="exploreFourNo" type="button">NÃO, VOLTAR AO MUSEU</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="locationPanelFour" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog location-dialog">
+                <div class="dialog-kicker">CAPÍTULO 4 · EXPLORAÇÃO</div>
+                <h2>Para onde você deseja ir?</h2>
+                <p class="dialog-subtitle">Observe como propaganda e repressão tomaram o espaço público.</p>
+                <div id="locationOptionsFour" class="location-options">
+                    <button class="location-button" type="button" data-location-four="berlim">Berlim</button>
+                    <button class="location-button" type="button" data-location-four="bairro-residencial">Bairro Residencial</button>
+                    <button class="location-button" type="button" data-location-four="redacao-jornal">Redação do Jornal</button>
+                    <button class="location-button" type="button" data-location-four="campo-propaganda">Campo de Propaganda</button>
+                    <button class="location-button" type="button" data-location-four="reichstag">Reichstag</button>
+                </div>
+                <button id="locationBackFour" class="secondary-button" type="button">VOLTAR</button>
+            </div>
+        </section>
+
+        <!-- Puzzle de investigação para os Capítulos 2, 3 e 4 -->
+        <section id="adventurePuzzlePanel" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog puzzle-dialog">
+                <div id="adventurePuzzleKicker" class="dialog-kicker"></div>
+                <h2 id="adventurePuzzleTitle"></h2>
+                <p id="adventurePuzzleText" class="dialog-subtitle"></p>
+                <div class="puzzle-inventory">PISTAS ORGANIZADAS: <span id="adventurePuzzleProgress">0</span></div>
+                <div id="adventurePuzzleClues" class="adventure-clues"></div>
+                <p id="adventurePuzzleFeedback" class="puzzle-feedback" aria-live="polite"></p>
+                <div class="dialog-actions">
+                    <button id="adventurePuzzleRestart" class="secondary-button" type="button">RECOMEÇAR</button>
+                    <button id="adventurePuzzleContinue" class="hidden" type="button">CONTINUAR</button>
+                    <button id="adventurePuzzleBack" class="secondary-button" type="button">VOLTAR</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="missionPanel" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog mission-dialog">
+                <div id="missionKicker" class="dialog-kicker"></div>
+                <h2 id="missionTitle"></h2>
+                <p id="missionText" class="dialog-subtitle"></p>
+                <div id="missionQuestion">
+                    <p id="missionProgress" class="mission-progress"></p>
+                    <p id="missionQuestionText" class="mission-question"></p>
+                    <div id="missionAnswers" class="puzzle-options"></div>
+                </div>
+                <p id="missionFeedback" class="puzzle-feedback" aria-live="polite"></p>
+                <div class="dialog-actions">
+                    <button id="missionContinue" class="hidden" type="button">CONTINUAR</button>
+                    <button id="missionBack" class="secondary-button" type="button">VOLTAR</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="notebookPanel" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog notebook-dialog">
+                <div class="dialog-kicker">REGISTRO DE DESCOBERTAS</div>
+                <h2>📖 Caderno Histórico</h2>
+                <p class="dialog-subtitle">As descobertas ficam salvas neste arquivo de jogo.</p>
+                <div id="notebookEntries" class="notebook-entries"></div>
+                <button id="notebookClose" class="secondary-button" type="button">FECHAR</button>
+            </div>
+        </section>
+
+        <section id="finalReviewPanel" class="chapter-panel hidden" aria-live="polite">
+            <div class="chapter-dialog mission-dialog">
+                <div class="dialog-kicker">PORTA FINAL · LADO ESQUERDO DO MUSEU</div>
+                <h2 id="finalPuzzleTitle">A linha do tempo perdida</h2>
+                <p id="finalPuzzlePrompt" class="dialog-subtitle">Organize os acontecimentos do mais antigo ao mais recente. Selecione dois eventos para trocar suas posições.</p>
+                <div id="finalTimelineBoard" class="final-timeline-board" role="group" aria-label="Acontecimentos históricos para ordenar"></div>
+                <p id="finalReviewFeedback" class="puzzle-feedback" aria-live="polite"></p>
+                <div class="dialog-actions final-puzzle-actions">
+                    <button id="finalPuzzleCheck" type="button">VERIFICAR ORDEM</button>
+                    <button id="finalPuzzleRestart" class="secondary-button" type="button">EMBARALHAR</button>
+                    <button id="finalPuzzleBack" class="secondary-button" type="button">VOLTAR AO MUSEU</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="endingScreen" class="ending-screen hidden" aria-label="Epílogo de Memórias do Século XX">
+            <aside id="endingControls" class="ending-controls">
+                <button id="endingSpeedButton" type="button" aria-expanded="false" aria-controls="endingSpeedOptions">VELOCIDADE 1.0×</button>
+                <div id="endingSpeedOptions" class="ending-speed-options hidden" role="group" aria-label="Velocidade dos créditos">
+                    <button type="button" data-ending-speed="0.2">0.2×</button>
+                    <button type="button" data-ending-speed="0.5">0.5×</button>
+                    <button type="button" data-ending-speed="1.0">1.0×</button>
+                    <button type="button" data-ending-speed="1.5">1.5×</button>
+                    <button type="button" data-ending-speed="2.0">2.0×</button>
+                </div>
+            </aside>
+            <article id="endingRoll" class="ending-roll">
+                <h1>MEMÓRIAS DO SÉCULO XX</h1>
+                <p class="ending-subtitle">1914 — 1991</p>
+                <p>O século começou sob o estrondo da guerra. Em 1914, milhões marcharam acreditando que o conflito seria breve. As trincheiras ensinaram outra coisa: a lama, a espera e a distância entre uma ordem e quem precisava cumpri-la. Quando os canhões silenciaram, impérios haviam caído, cidades estavam feridas e famílias tentavam reconhecer o mundo que restara.</p>
+                <p>A paz não apagou a fome nem as disputas. Na Rússia, soldados e trabalhadores derrubaram o czar e disputaram o futuro do país. Em 1929, a confiança que parecia sustentar Wall Street desmoronou. Bancos fecharam, fábricas pararam, e a crise atravessou fronteiras até chegar às mesas e às moradias de gente comum.</p>
+                <p>Na Alemanha, uma democracia enfraquecida cedeu espaço à propaganda, à censura e à perseguição. O silêncio imposto a jornais e vizinhos abriu caminho para uma violência que se espalhou pelo continente. A Segunda Guerra Mundial transformou cidades em frentes de batalha, obrigou milhões a fugir e deixou marcas que nenhum tratado poderia apagar.</p>
+                <p>Em Hiroshima e Nagasaki, uma única arma mostrou que a humanidade podia destruir, em instantes, o lugar onde gerações haviam vivido. Os sobreviventes carregaram essa memória por décadas. Lembrar seus relatos é reconhecer que a história não é feita apenas de fronteiras e governos: ela também vive nos nomes, nas perdas e nas escolhas de cada pessoa.</p>
+                <p>Depois, o planeta passou a conviver com duas superpotências e com a ameaça de uma guerra nuclear. Enquanto alianças se firmavam, pessoas divididas por muros e fronteiras continuavam a buscar trabalho, segurança e voz. Na China, camponeses, trabalhadores e soldados também atravessaram revoluções que mudaram quem governava e como o poder era exercido.</p>
+                <p>Em 1989, as passagens do Muro de Berlim se abriram. Dois anos depois, a União Soviética deixou de existir. Nenhum desses finais resolveu todos os conflitos; cada um abriu novas perguntas. Mas, por trás das datas que organizam este século, havia sempre pessoas tentando proteger umas às outras, reconstruir casas e imaginar um amanhã diferente.</p>
+                <p>Você percorreu dez capítulos e reuniu fragmentos dessa jornada. As memórias não devolvem o que foi perdido, mas ajudam a compreender como escolhas, coragem e indiferença podem mudar o destino de muitos. O passado permanece conosco quando aprendemos a escutá-lo.</p>
+                <p class="ending-last-line">E a história continua em cada geração que escolhe lembrar.</p>
+                <section class="ending-credits" aria-label="Créditos">
+                    <h2>CRÉDITOS</h2>
+                    <p class="credits-label">PARTICIPANTES</p>
+                    <ul class="credits-list">
+                        <li>Cauãn Nascimento Sousa</li>
+                        <li>Gionvana Castro da Silva</li>
+                        <li>João Paulo Barros Nascimento</li>
+                        <li>Karoline Araújo dos Santos</li>
+                        <li>Kethely Millenna Nascimento Rocha</li>
+                        <li>Laryssa Santos Aguiar</li>
+                        <li>Luiz Carlos Rabelo de Souza</li>
+                    </ul>
+                    <p class="credits-label">PARTICIPAÇÃO ESPECIAL</p>
+                    <p class="credits-guest">Victor Hugo da Silva Araújo</p>
+                    <p class="credits-label">LINGUAGENS E TECNOLOGIAS</p>
+                    <p class="credits-detail">HTML · CSS · JavaScript</p>
+                    <p class="credits-label">INTELIGÊNCIA ARTIFICIAL</p>
+                    <p class="credits-detail">Criação dos cenários: ChatGPT</p>
+                    <p class="credits-detail">Orientação nos códigos: Codex</p>
+                </section>
+            </article>
+            <div id="endingFinish" class="ending-finish hidden" aria-live="polite">
+                <h2>FIM</h2>
+                <button id="endingMenuButton" type="button">VOLTAR AO MENU</button>
+            </div>
+        </section>
+
+        <!-- A tela de transição impede a troca instantânea entre museu e cenário. -->
+        <div id="sceneTransition" class="hidden" aria-live="polite">
+            <div>VIAJANDO PELA HISTÓRIA...</div>
+        </div>
+
+        <section id="scenarioPanel" class="hidden" aria-live="polite">
+            <img id="scenarioImage" src="" alt="">
+            <div class="scenario-shade"></div>
+            <article id="scenarioStory">
+                <div id="scenarioChapter" class="dialog-kicker">CAPÍTULO 1 · 1914–1918</div>
+                <h2 id="scenarioTitle"></h2>
+                <p id="scenarioText"></p>
+                <div class="dialog-actions scenario-actions">
+                    <button id="scenarioLocations" type="button">OUTROS LUGARES</button>
+                    <button id="scenarioMuseum" class="secondary-button" type="button">VOLTAR AO MUSEU</button>
+                </div>
+            </article>
+        </section>
+
+    </section>
+
+    <!-- =========================
+         OPÇÕES
+    ========================== -->
+
+    <div id="options" class="hidden">
+
+        <div id="optionsBox">
+
+            <h2 id="optionsTitle">OPÇÕES</h2>
+
+            <div class="separator"></div>
+
+            <div class="option">
+
+                <span id="volumeLabel">VOLUME</span>
+
+                <input
+                    id="volume"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="100"
+                >
+
+                <span id="volumeNumber">
+                    100%
+                </span>
+
+            </div>
+
+            <div class="option">
+
+                <label id="languageLabel" for="languageSelect">IDIOMA</label>
+
+                <select id="languageSelect" aria-label="Idioma">
+                    <option value="pt-BR">Português</option>
+                    <option value="en">English</option>
+                </select>
+
+            </div>
+
+            <div class="option">
+
+                <span id="controlsLabel">CONTROLES</span>
+
+                <span>WASD / SETAS</span>
+
+            </div>
+
+            <button id="backButton">
+                VOLTAR
+            </button>
+
+            <button id="returnMenuButton" class="hidden secondary-button" type="button">
+                VOLTAR AO MENU
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="game.js"></script>
+
+</body>
+
+</html>
