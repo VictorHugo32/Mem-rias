@@ -2581,16 +2581,14 @@ scenarioMuseum.addEventListener("click", closeChapterOneExperience);
 ========================================================= */
 
 exitButton.addEventListener("click", () => {
-    window.close();
+    stopMusic();
 
-    /* Navegadores bloqueiam fechar abas abertas manualmente.
-       Nesse caso, voltamos ao menu sem quebrar o jogo. */
-    setTimeout(() => {
-        gameRunning = false;
-        game.classList.add("hidden");
-        options.classList.add("hidden");
-        menu.classList.remove("hidden");
-        startMenuMusic();
+    /* Uma página aberta pelo usuário não pode fechar sua própria aba.
+       Fechamos quando o navegador permitir; caso contrário, saímos do jogo
+       navegando para uma página vazia nesta mesma aba. */
+    window.close();
+    window.setTimeout(() => {
+        if (!window.closed) window.location.replace("about:blank");
     }, 150);
 });
 
@@ -2617,3 +2615,4 @@ resizeCollisionCanvas();
 setInitialPosition();
 updatePlayerPosition();
 requestAnimationFrame(gameLoop);
+
